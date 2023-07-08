@@ -1,6 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://bbinbrfsijhpq"]
+[gd_scene load_steps=5 format=3 uid="uid://bbinbrfsijhpq"]
 
 [ext_resource type="Texture2D" uid="uid://dkkm7i1afgn74" path="res://level/level.png" id="1"]
+[ext_resource type="PackedScene" uid="uid://p22natcypeo" path="res://objects/beer.tscn" id="2_cgi6j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_svd71"]
+size = Vector2(25, 284.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v4pnq"]
+size = Vector2(29.9274, 658.416)
 
 [node name="Level" type="StaticBody2D"]
 
@@ -11,10 +18,10 @@ texture = ExtResource("1")
 position = Vector2(-66, 866)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(-71, 891, -26, 891, -25, 892, 30, 892, 39, 888, 42, 887, 46, 887, 50, 885, 53, 882, 57, 879, 61, 877, 67, 875, 69, 874, 72, 873, 78, 870, 81, 868, 85, 866, 88, 865, 109, 865, 113, 866, 119, 869, 123, 873, 126, 878, 129, 880, 133, 882, 135, 883, 140, 884, 147, 884, 164, 884, 164, 915, -72, 916, -72, 892)
+polygon = PackedVector2Array(-25, 895, -2, 892, 35, 892, 39, 888, 50, 887, 61, 879, 69, 876, 79, 871, 90, 866, 108, 866, 116, 869, 121, 874, 126, 881, 135, 885, 164, 885, 164, 915, -72, 916, -72, 895)
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(-71, 892, -100, 892, -111, 891, -121, 889, -128, 886, -137, 885, -151, 885, -163, 883, -180, 879, -193, 877, -206, 874, -216, 872, -227, 870, -242, 867, -257, 864, -265, 862, -266, 885, -71, 918)
+polygon = PackedVector2Array(-71, 895, -97, 895, -110, 893, -128, 890, -151, 887, -181, 883, -242, 870, -265, 864, -266, 885, -71, 918)
 
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(25, 824, 23, 820, 20, 817, 16, 815, 4, 815, 2, 814, 0, 813, -4, 812, -11, 812, -16, 810, -20, 809, -25, 809, -28, 808, -34, 807, -40, 806, -44, 805, -50, 803, -54, 801, -60, 801, -64, 803, -67, 806, -68, 808, -69, 809, -70, 811, -71, 813, -71, 820, -69, 824, -66, 827, -60, 830, -56, 832, -50, 834, -41, 836, -34, 838, -27, 839, -19, 840, 9, 840, 12, 839, 16, 839, 18, 838, 20, 837, 22, 835, 24, 832, 25, 830)
@@ -29,11 +36,11 @@ polygon = PackedVector2Array(-187, 721, -189, 717, -192, 713, -195, 710, -198, 7
 polygon = PackedVector2Array(-187, 620, -185, 614, -180, 610, -178, 609, -154, 609, -147, 610, -142, 611, -138, 610, -131, 607, -128, 606, -121, 603, -107, 596, -100, 594, -97, 593, -93, 589, -89, 587, -83, 587, -79, 589, -76, 592, -70, 605, -70, 628, -74, 640, -79, 648, -82, 653, -94, 661, -108, 661, -124, 658, -140, 654, -155, 652, -167, 645, -175, 636, -182, 630, -186, 625)
 
 [node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(174, 881, 186, 881, 202, 881, 212, 879, 232, 877, 246, 875, 262, 874, 277, 870, 294, 866, 306, 859, 318, 855, 333, 855, 343, 849, 357, 836, 392, 847, 375, 874, 230, 907, 182, 915, 163, 915, 164, 884, 169, 884)
+polygon = PackedVector2Array(202, 885, 221, 885, 238, 882, 265, 879, 285, 873, 315, 864, 337, 856, 364, 843, 392, 847, 375, 874, 230, 907, 182, 915, 163, 915, 164, 885)
 
 [node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="."]
 position = Vector2(0, -1)
-polygon = PackedVector2Array(-265, 863, -265, 863, -278, 862, -292, 860, -302, 857, -307, 852, -323, 847, -362, 837, -406, 823, -429, 812, -439, 807, -442, 800, -449, 792, -458, 788, -466, 785, -486, 772, -500, 754, -509, 730, -520, 706, -532, 688, -552, 668, -570, 661, -516, 774, -473, 815, -369, 862, -265, 885)
+polygon = PackedVector2Array(-265, 865, -278, 862, -302, 857, -323, 851, -362, 839, -406, 824, -440, 808, -465, 794, -489, 776, -502, 754, -512, 730, -520, 706, -532, 688, -552, 668, -570, 661, -516, 774, -473, 815, -369, 862, -265, 885)
 
 [node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-297, 600, -347, 600, -351, 598, -359, 596, -371, 592, -382, 584, -397, 576, -405, 570, -411, 570, -415, 572, -418, 575, -420, 579, -420, 587, -414, 598, -407, 606, -383, 618, -359, 624, -337, 628, -299, 628, -294, 625, -289, 617, -288, 614, -288, 609, -289, 607, -290, 605, -293, 602)
@@ -51,7 +58,41 @@ polygon = PackedVector2Array(-306, 381, -316, 398, -333, 405, -345, 416, -345, 4
 polygon = PackedVector2Array(-157, 490, -165, 490, -172, 487, -178, 479, -178, 471, -174, 462, -164, 456, -158, 446, -146, 418, -142, 395, -142, 360, -145, 351, -153, 334, -162, 328, -174, 315, -175, 304, -169, 293, -162, 290, -157, 290, -142, 297, -136, 304, -123, 316, -110, 345, -110, 388, -102, 411, -91, 417, -68, 425, -31, 434, -13, 437, 11, 437, 17, 440, 25, 450, 25, 457, 21, 463, 11, 469, -39, 469, -59, 464, -103, 454, -119, 444, -131, 471, -141, 482)
 
 [node name="CollisionPolygon2D14" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(349, 843, 358, 831, 366, 823, 380, 810, 414, 794, 447, 788, 466, 785, 493, 773, 510, 763, 543, 740, 555, 724, 572, 714, 594, 691, 600, 687, 609, 678, 651, 636, 680, 600, 720, 600, 674, 657, 598, 740, 524, 800, 417, 839)
+polygon = PackedVector2Array(364, 844, 400, 824, 446, 800, 474, 785, 495, 773, 514, 762, 526, 756, 544, 740, 557, 724, 572, 714, 595, 692, 603, 687, 611, 678, 624, 663, 651, 636, 680, 600, 720, 600, 674, 657, 598, 740, 524, 800, 417, 839)
 
 [node name="CollisionPolygon2D15" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-13, 564, -11, 559, 0, 551, 18, 551, 33, 545, 52, 540, 70, 536, 142, 536, 147, 535, 150, 531, 154, 525, 160, 519, 165, 516, 175, 511, 186, 506, 240, 506, 249, 503, 265, 503, 274, 500, 291, 500, 300, 505, 303, 513, 303, 519, 300, 526, 290, 532, 279, 535, 254, 538, 202, 538, 195, 540, 182, 549, 173, 558, 167, 563, 161, 568, 80, 568, 74, 571, 59, 574, 52, 577, 42, 579, 33, 583, 0, 583, -9, 578, -12, 573, -13, 570)
+
+[node name="Beer" parent="." instance=ExtResource("2_cgi6j")]
+position = Vector2(-232, -775)
+
+[node name="Beer2" parent="." instance=ExtResource("2_cgi6j")]
+position = Vector2(-310, -841)
+
+[node name="Beer3" parent="." instance=ExtResource("2_cgi6j")]
+position = Vector2(-308, -768)
+
+[node name="Beer4" parent="." instance=ExtResource("2_cgi6j")]
+position = Vector2(-313, -691)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-245, -23.75)
+shape = SubResource("RectangleShape2D_svd71")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(-327.802, -486.902)
+rotation = -0.261799
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_v4pnq")
+
+[node name="CollisionPolygon2D16" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-680, 640, -699, 649, -712, 677, -727, 718, -728, 755, -723, 785, -700, 785)
+
+[node name="CollisionPolygon2D17" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-680, 641, -677, 639, -629, 639, -621, 642, -616, 643, -608, 647, -605, 649, -570, 660, -569, 667)
+
+[node name="CollisionPolygon2D18" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-858, 544, -883, 607, -886, 687, -875, 784, -856, 869, -829, 960, -841, 956, -911, 743, -908, 589)
+
+[node name="CollisionPolygon2D19" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(681, 600, 703, 562, 722, 526, 750, 465, 785, 388, 808, 326, 829, 236, 840, 164, 881, 165, 850, 326, 760, 522, 713, 601)

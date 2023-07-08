@@ -136,17 +136,6 @@ func move(delta):
 ################################################################################
 # Timer Functions
 
-func add_no_jump_timer():
-    # Prevent player from hitting jump for a moment after landing
-    var timer = Timer.new()
-    timer.name = "no_jump_timer"
-    timer.set_one_shot(true)
-    timer.set_wait_time(vertical_jump_time)
-    timer.connect('timeout', Callable(timer, 'queue_free'))
-
-    add_child(timer)
-    timer.start()
-
 func add_jump_timer():
     # Set timer that allows player to ingore gravity until vertical_jump_time passes
     var timer = Timer.new()
