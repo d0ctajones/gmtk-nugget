@@ -121,8 +121,6 @@ func process_gravity(delta):
 
 func move(delta):
     process_gravity(delta)
-
-    set_floor_max_angle(1.04)
     move_and_slide()
 
     if state == STATES.FALL:
