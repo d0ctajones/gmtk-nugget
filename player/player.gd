@@ -10,7 +10,7 @@ export (int) var air_move_speed         = 120
 export (int) var air_acceleration       = 100
 export (int) var air_friction           = 20
 export (float) var vertical_jump_time   = 0.25
-export (float) var no_jump_time         = 0.18
+export (float) var no_jump_time         = 0.04
 export (Vector2) var velocity           = Vector2.ZERO
 
 # Possible player states
@@ -30,18 +30,17 @@ func _physics_process(delta):
 
     move(delta)
 
+func flip_sprite():
+    if velocity.x < 0:
+        $Sprite.flip_h = true
+    elif velocity.x > 0:
+        $Sprite.flip_h = false
+
 ################################################################################
 # State Functions
 
 func move_state(delta):
     var input_vector = Vector2.ZERO
-
-    if Input.is_action_pressed("jump"):
-        if has_node("no_jump_timer"):
-            pass
-        else:
-            state = STATES.JUMP
-            return
 
     if Input.is_action_pressed("move_right"):
         input_vector.x = 1
@@ -51,6 +50,7 @@ func move_state(delta):
     if input_vector != Vector2.ZERO:
         # Accelerate in the direction of the input_vector.x value
         velocity.x = lerp(velocity.x, input_vector.x * max_ground_speed, ground_acceleration * delta)
+        flip_sprite()
     else:
         # Steadily apply ground_friction until x-axis speed is 0
         velocity.x = lerp(velocity.x, 0, ground_friction * delta)
@@ -58,17 +58,17 @@ func move_state(delta):
     # Limit to max groundspeed
     velocity.x = clamp(velocity.x, -max_ground_speed, max_ground_speed)
 
+    if Input.is_action_pressed("jump"):
+        if has_node("no_jump_timer"):
+            pass
+        else:
+            state = STATES.JUMP
+
 func jump_state(delta):
     if has_node("jump_timer"):
         velocity.y = -jump_speed
     else:
         add_jump_timer()
-
-    if Input.is_action_just_released("jump"):
-        # Shorter jump height if space bar released early
-        if has_node("jump_timer"):
-            get_node("jump_timer").queue_free()
-            state = STATES.FALL
 
     var input_vector = Vector2.ZERO
 
@@ -80,10 +80,17 @@ func jump_state(delta):
 
     if input_vector != Vector2.ZERO:
         velocity.x = lerp(velocity.x, input_vector.x * max_ground_speed, ground_acceleration * delta)
+        flip_sprite()
     else:
         velocity.x = lerp(velocity.x, 0, ground_friction * delta)
 
     velocity.x = clamp(velocity.x, -max_ground_speed, max_ground_speed)
+
+    if Input.is_action_just_released("jump"):
+        # Shorter jump height if space bar released early
+        if has_node("jump_timer"):
+            get_node("jump_timer").queue_free()
+            state = STATES.FALL
 
 
 func fall_state(delta):
@@ -129,6 +136,8 @@ func move(delta):
         elif state == STATES.JUMP:
             if collision.normal.y >= 0.75:
                 # Player hit head on ceiling
+                if has_node("jump_timer"):
+                    get_node("jump_timer").queue_free()
                 state = STATES.FALL
 
     velocity = move_and_slide(velocity, Vector2(0, -1), true, 2, 0.75, true)
@@ -139,7 +148,7 @@ func move(delta):
 func add_no_jump_timer():
     # Prevent player from hitting jump for a moment after landing
     var timer = Timer.new()
-    timer.name = "no_jump_time"
+    timer.name = "no_jump_timer"
     timer.set_one_shot(true)
     timer.set_wait_time(vertical_jump_time)
     timer.connect('timeout', timer, 'queue_free')

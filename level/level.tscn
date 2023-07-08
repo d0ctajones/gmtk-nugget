@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://level/level.png" type="Texture" id=1]
+[ext_resource path="res://objects/beer.tscn" type="PackedScene" id=2]
 
 [node name="Level" type="StaticBody2D"]
 
@@ -55,3 +56,6 @@ polygon = PoolVector2Array( 349, 843, 358, 831, 366, 823, 380, 810, 414, 794, 44
 
 [node name="CollisionPolygon2D15" type="CollisionPolygon2D" parent="."]
 polygon = PoolVector2Array( -13, 564, -11, 559, 0, 551, 18, 551, 33, 545, 52, 540, 70, 536, 142, 536, 147, 535, 150, 531, 154, 525, 160, 519, 165, 516, 175, 511, 186, 506, 240, 506, 249, 503, 265, 503, 274, 500, 291, 500, 300, 505, 303, 513, 303, 519, 300, 526, 290, 532, 279, 535, 254, 538, 202, 538, 195, 540, 182, 549, 173, 558, 167, 563, 161, 568, 80, 568, 74, 571, 59, 574, 52, 577, 42, 579, 33, 583, 0, 583, -9, 578, -12, 573, -13, 570 )
+
+[node name="Beer" parent="." instance=ExtResource( 2 )]
+position = Vector2( 198, 498 )
