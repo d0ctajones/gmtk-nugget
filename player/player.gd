@@ -13,6 +13,10 @@ extends CharacterBody2D
 
 @onready var kicker = get_node("Kicker")
 
+var status = {
+    "HEALTH": 3
+}
+
 # Possible player states
 enum STATES {
     MOVE,
@@ -21,6 +25,8 @@ enum STATES {
 }
 
 signal state_change(state)
+signal health_changed
+signal player_died
 
 var current_state = STATES.MOVE
 
@@ -43,25 +49,6 @@ func _physics_process(delta):
         STATES.FALL: fall_state(delta)
 
     move(delta)
-
-func change_state(state):
-    var previous_state = current_state
-    current_state = state
-
-    if previous_state != current_state:
-        state_change.emit(STATES.keys()[current_state])
-
-func flip_sprite(direction):
-    if direction == "left":
-        $AnimationPlayer.play("move_left")
-    elif direction == "right":
-        $AnimationPlayer.play("move_right")
-
-func update_kick_list(action, body):
-    if action ==  "add":
-        kick_list[body.name] = body
-    else:
-        kick_list.erase(body.name)
 
 func kick():
     var x_direction = 0
@@ -138,7 +125,6 @@ func jump_state(delta):
             get_node("jump_timer").queue_free()
             change_state(STATES.FALL)
 
-
 func fall_state(delta):
     # Manages x-axis air control. Gravity application is in process_gravity
     var input_vector = Vector2.ZERO
@@ -168,7 +154,6 @@ func process_gravity(delta):
     velocity.y = move_toward(velocity.y, max_fall_speed, gravity * delta)
     velocity.y = clamp(velocity.y, -jump_speed, max_fall_speed)
 
-
 func move(delta):
     process_gravity(delta)
     move_and_slide()
@@ -182,6 +167,46 @@ func move(delta):
             if has_node("jump_timer"):
                 get_node("jump_timer").queue_free()
             change_state(STATES.FALL)
+
+################################################################################
+# Player Actions
+
+func change_state(state):
+    var previous_state = current_state
+    current_state = state
+
+    if previous_state != current_state:
+        state_change.emit()
+
+func flip_sprite(direction):
+    if direction == "left":
+        $AnimationPlayer.play("move_left")
+    elif direction == "right":
+        $AnimationPlayer.play("move_right")
+
+func update_kick_list(action, body):
+    if action ==  "add":
+        kick_list[body.name] = body
+    else:
+        kick_list.erase(body.name)
+
+################################################################################
+# Value Updaters
+
+func get_current_state():
+    return STATES.keys()[current_state]
+
+func _on_hurtbox_body_entered(body):
+    if body.has_method("deal_damage"):
+        take_hit(body.deal_damage())
+        state_change.emit()
+
+func take_hit(damage_amount):
+    status["HEALTH"] = status["HEALTH"] - damage_amount
+    state_change.emit()
+
+    if status["HEALTH"] <= 0:
+        player_died.emit()
 
 ################################################################################
 # Timer Functions

@@ -56,7 +56,7 @@ kick={
 2d_physics/layer_1="terrain"
 2d_physics/layer_2="hazard"
 2d_physics/layer_3="playerbody"
-2d_physics/layer_4="playereffect"
+2d_physics/layer_4="interactable"
 
 [physics]
 

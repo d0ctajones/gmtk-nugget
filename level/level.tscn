@@ -14,6 +14,8 @@ size = Vector2(29.9274, 658.416)
 [node name="Level" type="StaticBody2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -2
+z_as_relative = false
 position = Vector2(1, 0)
 texture = ExtResource("1")
 
@@ -129,14 +131,10 @@ position = Vector2(-293, 27)
 polygon = PackedVector2Array(118, 835, 118, 867, 153, 867, 153, 835)
 
 [node name="GasVent" parent="." instance=ExtResource("3_10hhl")]
+z_index = -2
 position = Vector2(-290, 610)
 rotation = -0.432859
 
 [node name="GasJetLong" parent="GasVent" instance=ExtResource("4_3b4cr")]
 position = Vector2(131.102, -14.3286)
 rotation = 1.4441
-
-[node name="ActivateAttackTimer" type="Timer" parent="GasVent"]
-autostart = true
-
-[connection signal="timeout" from="GasVent/ActivateAttackTimer" to="GasVent" method="_on_activate_attack_timer_timeout"]
