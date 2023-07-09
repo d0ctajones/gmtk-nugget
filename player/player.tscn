@@ -1,7 +1,89 @@
-[gd_scene load_steps=3 format=3 uid="uid://cvapdktyp4vkh"]
+[gd_scene load_steps=9 format=3 uid="uid://cvapdktyp4vkh"]
 
 [ext_resource type="Texture2D" uid="uid://b2n23ai5jm8tc" path="res://player/player.png" id="1"]
 [ext_resource type="Script" path="res://player/player.gd" id="2"]
+[ext_resource type="Script" path="res://player/kicker.gd" id="3_njfak"]
+
+[sub_resource type="Animation" id="Animation_wiqf7"]
+resource_name = "move_left"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Kicker/CollisionShape2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-16.875, 4)]
+}
+
+[sub_resource type="Animation" id="Animation_fqtnn"]
+resource_name = "move_right"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Kicker/CollisionShape2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(16, 4)]
+}
+
+[sub_resource type="Animation" id="Animation_ydfxi"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Kicker/CollisionShape2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(17, 7.25)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_m3rho"]
+_data = {
+"RESET": SubResource("Animation_ydfxi"),
+"move_left": SubResource("Animation_wiqf7"),
+"move_right": SubResource("Animation_fqtnn")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8f64o"]
+size = Vector2(26.25, 23.25)
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 4
@@ -20,3 +102,20 @@ polygon = PackedVector2Array(-10, -12, -7, -14, -4, -15, 7, -15, 11, -13, 11, 0,
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(3, 3)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_m3rho")
+}
+
+[node name="Kicker" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 16
+script = ExtResource("3_njfak")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Kicker"]
+position = Vector2(17, 7.25)
+shape = SubResource("RectangleShape2D_8f64o")
+
+[connection signal="body_entered" from="Kicker" to="Kicker" method="_on_body_entered"]
+[connection signal="body_exited" from="Kicker" to="Kicker" method="_on_body_exited"]

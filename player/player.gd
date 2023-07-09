@@ -1,16 +1,17 @@
 extends CharacterBody2D
 
-@export var max_ground_speed: float     = 250.0
-@export var ground_acceleration: float  = 30.0
-@export var ground_friction: float      = 50.0
-@export var gravity: float              = 2.0
-@export var max_fall_speed: float       = 700.0
-@export var jump_speed: float           = 350.0
-@export var air_move_speed: float       = 120.0
-@export var air_acceleration: float     = 100.0
-@export var air_friction: float         = 20.0
-@export var vertical_jump_time: float   = 0.25
+@export var max_ground_speed: float     = 300.0
+@export var ground_acceleration: float  = 2500.0
+@export var ground_friction: float      = 2000.0
+@export var gravity: float              = 3000.0
+@export var max_fall_speed: float       = 8000.0
+@export var jump_speed: float           = 400.0
+@export var air_move_speed: float       = 200.0
+@export var air_acceleration: float     = 1000.0
+@export var air_friction: float         = 300.0
+@export var vertical_jump_time: float   = 0.2
 
+@onready var kicker = get_node("Kicker")
 
 # Possible player states
 enum STATES {
@@ -21,7 +22,18 @@ enum STATES {
 
 var state = STATES.MOVE
 
+var kick_list = {}
+
+func _ready():
+    $AnimationPlayer.play("move_right")
+
+    $Kicker.update_kick_list.connect(update_kick_list)
+    print(kick_list)
+
 func _physics_process(delta):
+    if Input.is_action_just_pressed("kick"):
+        kick()
+
     match state:
         STATES.MOVE: move_state(delta)
         STATES.JUMP: jump_state(delta)
@@ -29,11 +41,36 @@ func _physics_process(delta):
 
     move(delta)
 
-func flip_sprite():
-    if velocity.x < 0:
-        $Sprite2D.flip_h = true
-    elif velocity.x > 0:
-        $Sprite2D.flip_h = false
+func flip_sprite(direction):
+    if direction == "left":
+        $AnimationPlayer.play("move_left")
+    elif direction == "right":
+        $AnimationPlayer.play("move_right")
+
+func update_kick_list(action, body):
+    if action ==  "add":
+        kick_list[body.name] = body
+    else:
+        kick_list.erase(body.name)
+
+func kick():
+    var x_direction = 0
+    var kick_x_velocity = 300
+    var kick_y_velocity = -300
+
+    if $AnimationPlayer.current_animation == "move_left":
+        x_direction = -1
+    else:
+        x_direction = 1
+
+    if state in [ STATES.JUMP, STATES.FALL ]:
+        kick_y_velocity = -150
+    elif state == STATES.MOVE:
+        if velocity.x == 0:
+            kick_x_velocity = 0
+
+    for body in kick_list.values():
+        body.kick(Vector2(x_direction * kick_x_velocity, kick_y_velocity))
 
 ################################################################################
 # State Functions
@@ -43,16 +80,17 @@ func move_state(delta):
 
     if Input.is_action_pressed("move_right"):
         input_vector.x = 1.0
+        flip_sprite("right")
     if Input.is_action_pressed("move_left"):
         input_vector.x = -1.0
+        flip_sprite("left")
 
     if input_vector != Vector2.ZERO:
         # Accelerate in the direction of the input_vector.x value
-        velocity.x = lerp(velocity.x, input_vector.x * max_ground_speed, ground_acceleration * delta)
-        flip_sprite()
+        velocity.x = move_toward(velocity.x, input_vector.x * max_ground_speed, ground_acceleration * delta)
     else:
         # Steadily apply ground_friction until x-axis speed is 0
-        velocity.x = lerp(velocity.x, 0.0, ground_friction * delta)
+        velocity.x = move_toward(velocity.x, 0, ground_friction * delta)
 
     # Limit to max groundspeed
     velocity.x = clamp(velocity.x, -max_ground_speed, max_ground_speed)
@@ -61,25 +99,25 @@ func move_state(delta):
         state = STATES.JUMP
 
 func jump_state(delta):
-    if Input.is_action_pressed("jump"):
-        if has_node("jump_timer"):
-            pass
-        else:
-            add_jump_timer()
+    if has_node("jump_timer"):
+        pass
+    else:
+        add_jump_timer()
 
     var input_vector = Vector2.ZERO
 
     # Allow player to preserve momentum by holding a direction
     if Input.is_action_pressed("move_right"):
         input_vector.x = 1.0
+        flip_sprite("right")
     if Input.is_action_pressed("move_left"):
         input_vector.x = -1.0
+        flip_sprite("left")
 
     if input_vector != Vector2.ZERO:
-        velocity.x = lerp(velocity.x, input_vector.x * max_ground_speed, ground_acceleration * delta)
-        flip_sprite()
+        velocity.x = move_toward(velocity.x, input_vector.x * max_ground_speed, ground_acceleration * delta)
     else:
-        velocity.x = lerp(velocity.x, 0.0, ground_friction * delta)
+        velocity.x = move_toward(velocity.x, 0, air_friction * delta)
 
     velocity.y = -jump_speed
     velocity.x = clamp(velocity.x, -max_ground_speed, max_ground_speed)
@@ -97,13 +135,15 @@ func fall_state(delta):
 
     if Input.is_action_pressed("move_right"):
         input_vector.x = 1.0
+        flip_sprite("right")
     if Input.is_action_pressed("move_left"):
         input_vector.x = -1.0
+        flip_sprite("left")
 
     if input_vector != Vector2.ZERO:
-        velocity.x = lerp(velocity.x, input_vector.x * air_move_speed, air_acceleration * delta)
+        velocity.x = move_toward(velocity.x, input_vector.x * air_move_speed, air_acceleration * delta)
     else:
-        velocity.x = lerp(velocity.x, 0.0, air_friction * delta)
+        velocity.x = move_toward(velocity.x, 0, air_friction * delta)
 
     velocity.x = clamp(velocity.x, -air_move_speed, air_move_speed)
 
@@ -115,8 +155,8 @@ func process_gravity(delta):
         # Don't apply gravity if currently jumping or touching the floor
         return
 
-    velocity.y = lerp(velocity.y, max_fall_speed, gravity * delta)
-    velocity.y = clamp(velocity.y, 0, max_fall_speed)
+    velocity.y = move_toward(velocity.y, max_fall_speed, gravity * delta)
+    velocity.y = clamp(velocity.y, -jump_speed, max_fall_speed)
 
 
 func move(delta):
