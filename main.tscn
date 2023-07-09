@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dq842q37jceio"]
+[gd_scene load_steps=4 format=3 uid="uid://dq842q37jceio"]
 
 [ext_resource type="Script" path="res://main.gd" id="1"]
 [ext_resource type="Script" path="res://HUD.gd" id="2_fvgu8"]
+[ext_resource type="Texture2D" uid="uid://blrkw70vrhd8g" path="res://hud/player_stats.png" id="3_kowtv"]
 
 [node name="main" type="Node"]
 script = ExtResource("1")
@@ -10,6 +11,32 @@ script = ExtResource("1")
 script = ExtResource("2_fvgu8")
 
 [node name="PlayerStats" type="Label" parent="HUD"]
-offset_right = 139.0
-offset_bottom = 23.0
-text = "NUGGET"
+offset_left = 29.0
+offset_top = 20.0
+offset_right = 168.0
+offset_bottom = 72.0
+text = "NUGGET
+Health"
+
+[node name="Sprite2D" type="Sprite2D" parent="HUD/PlayerStats"]
+z_index = -1
+position = Vector2(66.75, 26.75)
+scale = Vector2(1.95, 1.1625)
+texture = ExtResource("3_kowtv")
+
+[node name="Controls" type="Label" parent="HUD"]
+offset_left = 30.0
+offset_top = 580.0
+offset_right = 158.0
+offset_bottom = 684.0
+text = "Left click: Kick
+Space: Jump
+A: Move Left
+D: Move Right"
+uppercase = true
+
+[node name="Sprite2D" type="Sprite2D" parent="HUD/Controls"]
+z_index = -1
+position = Vector2(65, 55.007)
+scale = Vector2(1.94286, 2.70035)
+texture = ExtResource("3_kowtv")
