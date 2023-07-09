@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://yhnt0n6iajoq"]
+
+[ext_resource type="Script" path="res://hazards/gas_vent.gd" id="1_pfsa3"]
+[ext_resource type="Texture2D" uid="uid://ct1pwncs1yr" path="res://hazards/gas_vent.png" id="1_yisqf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_henti"]
+radius = 8.0
+
+[node name="GasVent" type="StaticBody2D"]
+collision_mask = 0
+script = ExtResource("1_pfsa3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(7, 3)
+texture = ExtResource("1_yisqf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 0)
+shape = SubResource("CircleShape2D_henti")
