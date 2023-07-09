@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://da7ty7u1mgbhr"]
+
+[ext_resource type="Script" path="res://objects/liquor.gd" id="1_eut3j"]
+[ext_resource type="Texture2D" uid="uid://db14h278lkn12" path="res://objects/liquor.png" id="2_30ti0"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oy1e1"]
+radius = 4.5
+height = 28.0
+
+[node name="Liquor" type="RigidBody2D"]
+z_index = 1
+z_as_relative = false
+collision_layer = 8
+collision_mask = 9
+gravity_scale = 0.9
+continuous_cd = 1
+max_contacts_reported = 2
+contact_monitor = true
+script = ExtResource("1_eut3j")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_30ti0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 3)
+shape = SubResource("CapsuleShape2D_oy1e1")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

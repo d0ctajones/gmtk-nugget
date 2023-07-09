@@ -4,17 +4,42 @@ extends CharacterBody2D
 @export var ground_acceleration: float  = 2500.0
 @export var ground_friction: float      = 2000.0
 @export var gravity: float              = 3000.0
-@export var max_fall_speed: float       = 8000.0
+@export var max_fall_speed: float       = 5000.0
 @export var jump_speed: float           = 400.0
 @export var air_move_speed: float       = 200.0
 @export var air_acceleration: float     = 1000.0
 @export var air_friction: float         = 300.0
 @export var vertical_jump_time: float   = 0.2
+@export var kick_interval: float        = 0.2
 
 @onready var kicker = get_node("Kicker")
 
+var hit_sounds = [
+    preload("res://player/ouch.ogg")
+]
+
+var attack_sounds = {
+    "vertical": preload("res://player/nyah_01.ogg"),
+    "horizontal": preload("res://player/hwah_01.ogg")
+}
+
+
+var talk_crap = [
+    preload("res://player/yeah.ogg"),
+    preload("res://player/take_that_beer.ogg")
+]
+
+var found_beer = false
+var found_beer_sound = preload("res://player/fizzy_fizzy_beer.ogg")
+
+var found_liquor = false
+var found_liquor_sound = preload("res://player/lucky_day_liquor.ogg")
+
+var landing_sound = preload("res://player/moist_impact.ogg")
+var head_impact_sound = preload("res://player/hit_head_deep.ogg")
+
 var status = {
-    "HEALTH": 3
+    "HEALTH": 5
 }
 
 # Possible player states
@@ -38,8 +63,10 @@ func _ready():
     $Kicker.update_kick_list.connect(update_kick_list)
 
 func _physics_process(delta):
-    if Input.is_action_just_pressed("kick"):
-        kick()
+    if Input.is_action_just_pressed("kick_vertical") :
+        kick("vertical")
+    elif Input.is_action_just_pressed("kick_horizontal"):
+        kick("horizontal")
 
     change_state(current_state)
 
@@ -50,24 +77,39 @@ func _physics_process(delta):
 
     move(delta)
 
-func kick():
+func kick(kick_type):
+    if has_node("kick_timer"):
+        pass
+    else:
+        add_kick_timer()
+
     var x_direction = 0
-    var kick_x_velocity = 300
-    var kick_y_velocity = -300
+
+    var kick_x_velocity = 0
+    var kick_y_velocity = 0
 
     if $AnimationPlayer.current_animation == "move_left":
         x_direction = -1
     else:
         x_direction = 1
 
-    if current_state in [ STATES.JUMP, STATES.FALL ]:
-        kick_y_velocity = -150
-    elif current_state == STATES.MOVE:
-        if velocity.x == 0:
-            kick_x_velocity = 0
+    if kick_type == "horizontal":
+        kick_x_velocity = x_direction * 400
+        kick_y_velocity = -200
+    elif kick_type == "vertical":
+        kick_y_velocity = -400
+        if current_state == STATES.MOVE:
+            if velocity == Vector2.ZERO:
+                kick_x_velocity = 0
+            else:
+                kick_x_velocity = x_direction * 150
 
+    if current_state in [ STATES.JUMP, STATES.FALL ]:
+        kick_y_velocity = kick_y_velocity - 150
+
+    play_sound(attack_sounds[kick_type])
     for body in kick_list.values():
-        body.kick(Vector2(x_direction * kick_x_velocity, kick_y_velocity))
+        body.kick(Vector2(kick_x_velocity, kick_y_velocity))
 
 ################################################################################
 # State Functions
@@ -99,7 +141,7 @@ func jump_state(delta):
     if has_node("jump_timer"):
         pass
     else:
-        add_jump_timer(delta)
+        add_jump_timer()
 
     var input_vector = Vector2.ZERO
 
@@ -158,12 +200,20 @@ func move(delta):
     process_gravity(delta)
     move_and_slide()
 
-    if current_state == STATES.FALL:
+    if current_state == STATES.MOVE:
+        if not is_on_floor():
+            change_state(STATES.FALL)
+
+    elif current_state == STATES.FALL:
         if is_on_floor():
             change_state(STATES.MOVE)
+            play_sound(landing_sound)
+        elif is_on_ceiling():
+            play_sound(head_impact_sound)
 
     elif current_state == STATES.JUMP:
         if is_on_ceiling_only():
+            play_sound(head_impact_sound)
             if has_node("jump_timer"):
                 get_node("jump_timer").queue_free()
             change_state(STATES.FALL)
@@ -186,12 +236,20 @@ func flip_sprite(direction):
 
 func update_kick_list(action, body):
     if action ==  "add":
+        if not found_beer:
+            if body.name.contains("Beer"):
+                found_beer = true
+                play_sound(found_beer_sound, 5.0)
+        if not found_liquor:
+            if body.name.contains("Liquor"):
+                found_liquor = true
+                play_sound(found_liquor_sound, 15.0)
         kick_list[body.name] = body
     else:
         kick_list.erase(body.name)
 
 ################################################################################
-# Value Updaters
+# Value Updaters and Getters
 
 func get_current_state():
     return STATES.keys()[current_state]
@@ -201,9 +259,20 @@ func _on_hurtbox_body_entered(body):
         take_hit(body.deal_damage())
         state_change.emit()
 
+func play_sound(sound, db=1.0):
+    var sound_player = AudioStreamPlayer.new()
+    sound_player.set_stream(sound)
+    sound_player.autoplay = true
+    sound_player.set_volume_db(db)
+    sound_player.connect('finished', Callable(sound_player, 'queue_free'))
+
+    get_parent().add_child(sound_player)
+
 func take_hit(damage_amount):
     status["HEALTH"] = status["HEALTH"] - damage_amount
     state_change.emit()
+
+    play_sound(hit_sounds[0])
 
     if status["HEALTH"] <= 0:
         player_died.emit()
@@ -211,7 +280,7 @@ func take_hit(damage_amount):
 ################################################################################
 # Timer Functions
 
-func add_jump_timer(delta):
+func add_jump_timer():
     # Set timer that allows player to ingore gravity until vertical_jump_time passes
     var timer = Timer.new()
     timer.name = "jump_timer"
@@ -219,6 +288,16 @@ func add_jump_timer(delta):
     timer.set_wait_time(vertical_jump_time)
     timer.connect('timeout', Callable(timer, 'queue_free'))
     timer.connect('timeout', Callable(self, '_end_jump'))
+
+    add_child(timer)
+    timer.start()
+
+func add_kick_timer():
+    var timer = Timer.new()
+    timer.name = "kick_timer"
+    timer.set_one_shot(true)
+    timer.set_wait_time(kick_interval)
+    timer.connect('timeout', Callable(timer, 'queue_free'))
 
     add_child(timer)
     timer.start()

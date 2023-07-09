@@ -118,7 +118,6 @@ position = Vector2(17, 7.25)
 shape = SubResource("RectangleShape2D_8f64o")
 
 [node name="Hurtbox" parent="." instance=ExtResource("4_l4jso")]
-script = null
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hurtbox"]
 polygon = PackedVector2Array(0, 15, 8, 13, 12, 12, 15, 9, 15, 5, 10, 1, 10, -13, 7, -14, -4, -14, -11, -10, -14, -4, -14, 10, -10, 14)

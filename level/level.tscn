@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bbinbrfsijhpq"]
+[gd_scene load_steps=8 format=3 uid="uid://bbinbrfsijhpq"]
 
 [ext_resource type="Texture2D" uid="uid://dkkm7i1afgn74" path="res://level/level.png" id="1"]
 [ext_resource type="PackedScene" uid="uid://p22natcypeo" path="res://objects/beer.tscn" id="2_cgi6j"]
 [ext_resource type="PackedScene" uid="uid://yhnt0n6iajoq" path="res://hazards/gas_vent.tscn" id="3_10hhl"]
 [ext_resource type="PackedScene" uid="uid://c207dprvy0doq" path="res://hazards/gas_jet_long.tscn" id="4_3b4cr"]
+[ext_resource type="PackedScene" uid="uid://da7ty7u1mgbhr" path="res://objects/liquor.tscn" id="5_d810e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_svd71"]
 size = Vector2(25, 284.5)
@@ -20,22 +21,10 @@ position = Vector2(1, 0)
 texture = ExtResource("1")
 
 [node name="PlayerSpawn" type="Marker2D" parent="."]
-position = Vector2(-162, 582)
+position = Vector2(-273, -687)
 
 [node name="Beer" parent="." instance=ExtResource("2_cgi6j")]
-position = Vector2(-232, -775)
-
-[node name="Beer2" parent="." instance=ExtResource("2_cgi6j")]
-position = Vector2(-310, -841)
-
-[node name="Beer3" parent="." instance=ExtResource("2_cgi6j")]
-position = Vector2(-308, -768)
-
-[node name="Beer4" parent="." instance=ExtResource("2_cgi6j")]
-position = Vector2(-313, -691)
-
-[node name="Beer5" parent="." instance=ExtResource("2_cgi6j")]
-position = Vector2(-159, 854)
+position = Vector2(236, 497)
 
 [node name="TerrainCollision1" type="CollisionPolygon2D" parent="."]
 visible = false
@@ -138,3 +127,12 @@ rotation = -0.432859
 [node name="GasJetLong" parent="GasVent" instance=ExtResource("4_3b4cr")]
 position = Vector2(131.102, -14.3286)
 rotation = 1.4441
+
+[node name="Liquor" parent="." instance=ExtResource("5_d810e")]
+position = Vector2(11, 534)
+
+[node name="Liquor2" parent="." instance=ExtResource("5_d810e")]
+position = Vector2(-247, 633)
+
+[node name="Liquor3" parent="." instance=ExtResource("5_d810e")]
+position = Vector2(-333, 583)

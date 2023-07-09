@@ -26,10 +26,11 @@ texture = ExtResource("3_kowtv")
 
 [node name="Controls" type="Label" parent="HUD"]
 offset_left = 30.0
-offset_top = 580.0
-offset_right = 158.0
-offset_bottom = 684.0
-text = "Left click: Kick
+offset_top = 560.0
+offset_right = 265.0
+offset_bottom = 690.0
+text = "Left click: Horizontal Kick
+Right click: Vertical Kick
 Space: Jump
 A: Move Left
 D: Move Right"
@@ -37,6 +38,6 @@ uppercase = true
 
 [node name="Sprite2D" type="Sprite2D" parent="HUD/Controls"]
 z_index = -1
-position = Vector2(65, 55.007)
-scale = Vector2(1.94286, 2.70035)
+position = Vector2(121, 66.5)
+scale = Vector2(3.54286, 3.275)
 texture = ExtResource("3_kowtv")

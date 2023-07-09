@@ -1,5 +1,7 @@
 extends Node
 
+var level_music = preload("res://music/Zander Noriega - Fight Them Until We Cant.mp3")
+
 func _ready():
     load_level()
     spawn_player()
@@ -20,6 +22,8 @@ func load_level():
 
     add_child(level_instance)
 
+    play_music()
+
 func connect_player_signals(player_node):
     $HUD.activate_player_hud(player_node)
     player_node.state_change.connect($HUD._update_player_stats)
@@ -28,3 +32,12 @@ func connect_player_signals(player_node):
 
 func handle_player_death():
     get_tree().reload_current_scene()
+
+func play_music():
+    var sound_player = AudioStreamPlayer.new()
+    sound_player.set_stream(level_music)
+    sound_player.autoplay = true
+    sound_player.set_volume_db(-25.0)
+    sound_player.connect('finished', Callable(sound_player, 'start'))
+
+    add_child(sound_player)
