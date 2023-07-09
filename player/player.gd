@@ -20,7 +20,9 @@ enum STATES {
     FALL,
 }
 
-var state = STATES.MOVE
+signal state_change(state)
+
+var current_state = STATES.MOVE
 
 var kick_list = {}
 
@@ -28,18 +30,26 @@ func _ready():
     $AnimationPlayer.play("move_right")
 
     $Kicker.update_kick_list.connect(update_kick_list)
-    print(kick_list)
 
 func _physics_process(delta):
     if Input.is_action_just_pressed("kick"):
         kick()
 
-    match state:
+    change_state(current_state)
+
+    match current_state:
         STATES.MOVE: move_state(delta)
         STATES.JUMP: jump_state(delta)
         STATES.FALL: fall_state(delta)
 
     move(delta)
+
+func change_state(state):
+    var previous_state = current_state
+    current_state = state
+
+    if previous_state != current_state:
+        state_change.emit(STATES.keys()[current_state])
 
 func flip_sprite(direction):
     if direction == "left":
@@ -63,9 +73,9 @@ func kick():
     else:
         x_direction = 1
 
-    if state in [ STATES.JUMP, STATES.FALL ]:
+    if current_state in [ STATES.JUMP, STATES.FALL ]:
         kick_y_velocity = -150
-    elif state == STATES.MOVE:
+    elif current_state == STATES.MOVE:
         if velocity.x == 0:
             kick_x_velocity = 0
 
@@ -96,13 +106,13 @@ func move_state(delta):
     velocity.x = clamp(velocity.x, -max_ground_speed, max_ground_speed)
 
     if Input.is_action_just_pressed("jump") and is_on_floor():
-        state = STATES.JUMP
+        change_state(STATES.JUMP)
 
 func jump_state(delta):
     if has_node("jump_timer"):
         pass
     else:
-        add_jump_timer()
+        add_jump_timer(delta)
 
     var input_vector = Vector2.ZERO
 
@@ -126,7 +136,7 @@ func jump_state(delta):
         # Shorter jump height if space bar released early
         if has_node("jump_timer"):
             get_node("jump_timer").queue_free()
-            state = STATES.FALL
+            change_state(STATES.FALL)
 
 
 func fall_state(delta):
@@ -151,7 +161,7 @@ func fall_state(delta):
 # Gravity and Move
 
 func process_gravity(delta):
-    if state == STATES.JUMP or is_on_floor():
+    if current_state == STATES.JUMP or is_on_floor():
         # Don't apply gravity if currently jumping or touching the floor
         return
 
@@ -163,20 +173,20 @@ func move(delta):
     process_gravity(delta)
     move_and_slide()
 
-    if state == STATES.FALL:
+    if current_state == STATES.FALL:
         if is_on_floor():
-            state = STATES.MOVE
+            change_state(STATES.MOVE)
 
-    elif state == STATES.JUMP:
+    elif current_state == STATES.JUMP:
         if is_on_ceiling_only():
             if has_node("jump_timer"):
                 get_node("jump_timer").queue_free()
-            state = STATES.FALL
+            change_state(STATES.FALL)
 
 ################################################################################
 # Timer Functions
 
-func add_jump_timer():
+func add_jump_timer(delta):
     # Set timer that allows player to ingore gravity until vertical_jump_time passes
     var timer = Timer.new()
     timer.name = "jump_timer"
@@ -189,4 +199,4 @@ func add_jump_timer():
     timer.start()
 
 func _end_jump():
-    state = STATES.FALL
+    change_state(STATES.FALL)
