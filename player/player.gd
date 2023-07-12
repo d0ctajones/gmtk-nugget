@@ -11,8 +11,8 @@ extends CharacterBody2D
 @export var air_friction: float         = 300.0
 @export var vertical_jump_time: float   = 0.2
 @export var kick_interval: float        = 0.2
-@export var dash_time: float            = 0.1
-@export var dash_speed: float           = 1250.0
+@export var dash_time: float            = 0.02
+@export var dash_speed: float           = 600.0
 @export var dash_cooldown: float        = 0.3
 
 @onready var kicker = get_node("Kicker")
@@ -73,7 +73,7 @@ func _physics_process(delta):
     elif Input.is_action_just_pressed("kick_horizontal"):
         kick("horizontal")
 
-    if Input.is_action_pressed("dash"):
+    if Input.is_action_just_pressed("dash"):
         if not has_node("dash_cooldown_timer"):
             change_state(STATES.DASH)
 
@@ -126,8 +126,9 @@ func dash_state(delta):
     if has_node("dash_timer"):
         if is_on_wall():
             get_node("dash_timer").queue_free()
-            change_state(STATES.MOVE)
-        pass
+            _end_dash()
+        else:
+            pass
     else:
         var input_vector = Vector2.ZERO
 
@@ -141,6 +142,8 @@ func dash_state(delta):
 
         velocity.y = 0
         velocity.x = input_vector.x * dash_speed
+
+        remove_child(hurtbox)
 
 
 func move_state(delta):
@@ -357,7 +360,11 @@ func _end_jump():
     change_state(STATES.FALL)
 
 func _end_dash():
+    add_child(hurtbox)
+
     if is_on_floor():
+        velocity.x = clamp(velocity.x, -max_ground_speed, max_ground_speed)
         change_state(STATES.MOVE)
     else:
+        velocity.x = clamp(velocity.x, -air_move_speed, air_move_speed)
         change_state(STATES.FALL)

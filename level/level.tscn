@@ -21,7 +21,7 @@ position = Vector2(1, 0)
 texture = ExtResource("1")
 
 [node name="PlayerSpawn" type="Marker2D" parent="."]
-position = Vector2(-273, -687)
+position = Vector2(-310, 547)
 
 [node name="Beer" parent="." instance=ExtResource("2_cgi6j")]
 position = Vector2(236, 497)
