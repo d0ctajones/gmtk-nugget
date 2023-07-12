@@ -22,7 +22,7 @@ func load_level():
 
     add_child(level_instance)
 
-    play_music()
+    # play_music()
 
 func connect_player_signals(player_node):
     $HUD.activate_player_hud(player_node)

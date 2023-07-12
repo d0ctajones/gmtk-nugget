@@ -11,8 +11,12 @@ extends CharacterBody2D
 @export var air_friction: float         = 300.0
 @export var vertical_jump_time: float   = 0.2
 @export var kick_interval: float        = 0.2
+@export var dash_time: float            = 0.1
+@export var dash_speed: float           = 1250.0
+@export var dash_cooldown: float        = 0.3
 
 @onready var kicker = get_node("Kicker")
+@onready var hurtbox = get_node("Hurtbox")
 
 var hit_sounds = [
     preload("res://player/ouch.ogg")
@@ -47,6 +51,7 @@ enum STATES {
     MOVE,
     JUMP,
     FALL,
+    DASH,
 }
 
 signal state_change(state)
@@ -68,12 +73,15 @@ func _physics_process(delta):
     elif Input.is_action_just_pressed("kick_horizontal"):
         kick("horizontal")
 
-    change_state(current_state)
+    if Input.is_action_pressed("dash"):
+        if not has_node("dash_cooldown_timer"):
+            change_state(STATES.DASH)
 
     match current_state:
         STATES.MOVE: move_state(delta)
         STATES.JUMP: jump_state(delta)
         STATES.FALL: fall_state(delta)
+        STATES.DASH: dash_state(delta)
 
     move(delta)
 
@@ -113,6 +121,27 @@ func kick(kick_type):
 
 ################################################################################
 # State Functions
+
+func dash_state(delta):
+    if has_node("dash_timer"):
+        if is_on_wall():
+            get_node("dash_timer").queue_free()
+            change_state(STATES.MOVE)
+        pass
+    else:
+        var input_vector = Vector2.ZERO
+
+        add_dash_cooldown_timer()
+        add_dash_timer()
+
+        if $AnimationPlayer.current_animation == "move_right":
+            input_vector.x = 1.0
+        elif $AnimationPlayer.current_animation == "move_left":
+            input_vector.x = -1.0
+
+        velocity.y = 0
+        velocity.x = input_vector.x * dash_speed
+
 
 func move_state(delta):
     var input_vector = Vector2.ZERO
@@ -225,8 +254,7 @@ func change_state(state):
     var previous_state = current_state
     current_state = state
 
-    if previous_state != current_state:
-        state_change.emit()
+    state_change.emit()
 
 func flip_sprite(direction):
     if direction == "left":
@@ -302,5 +330,34 @@ func add_kick_timer():
     add_child(timer)
     timer.start()
 
+func add_dash_cooldown_timer():
+    # Set timer that allows player to ingore gravity until vertical_jump_time passes
+    var timer = Timer.new()
+    timer.name = "dash_cooldown_timer"
+    timer.set_one_shot(true)
+    timer.set_wait_time(dash_cooldown)
+    timer.connect('timeout', Callable(timer, 'queue_free'))
+
+    add_child(timer)
+    timer.start()
+
+func add_dash_timer():
+    # Set timer that allows player to ingore gravity until vertical_jump_time passes
+    var timer = Timer.new()
+    timer.name = "dash_timer"
+    timer.set_one_shot(true)
+    timer.set_wait_time(dash_cooldown)
+    timer.connect('timeout', Callable(timer, 'queue_free'))
+    timer.connect('timeout', Callable(self, '_end_dash'))
+
+    add_child(timer)
+    timer.start()
+
 func _end_jump():
     change_state(STATES.FALL)
+
+func _end_dash():
+    if is_on_floor():
+        change_state(STATES.MOVE)
+    else:
+        change_state(STATES.FALL)

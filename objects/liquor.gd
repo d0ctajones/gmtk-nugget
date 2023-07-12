@@ -43,5 +43,4 @@ func play_sound(sound):
     get_parent().add_child(sound_player)
 
 func _on_body_entered(body):
-    print('clunk')
     play_sound(clink_sound)
