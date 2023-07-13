@@ -17,7 +17,7 @@ func spawn_player():
     add_child(player_node)
 
 func load_level():
-    var level = load("res://level/level.tscn")
+    var level = load("res://level/Laboratory.tscn")
     var level_instance = level.instantiate()
 
     add_child(level_instance)

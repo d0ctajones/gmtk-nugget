@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://cvapdktyp4vkh"]
 
-[ext_resource type="Texture2D" uid="uid://b2n23ai5jm8tc" path="res://player/player.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://b2n23ai5jm8tc" path="res://player/assets/player.png" id="1"]
 [ext_resource type="Script" path="res://player/player.gd" id="2"]
 [ext_resource type="Script" path="res://player/kicker.gd" id="3_njfak"]
 [ext_resource type="PackedScene" uid="uid://ig3ea78h4oqw" path="res://player/hurtbox.tscn" id="4_l4jso"]

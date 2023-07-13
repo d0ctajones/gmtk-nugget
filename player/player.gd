@@ -19,28 +19,28 @@ extends CharacterBody2D
 @onready var hurtbox = get_node("Hurtbox")
 
 var hit_sounds = [
-    preload("res://player/ouch.ogg")
+    preload("res://player/sounds/ouch.ogg")
 ]
 
 var attack_sounds = {
-    "vertical": preload("res://player/nyah_01.ogg"),
-    "horizontal": preload("res://player/hwah_01.ogg")
+    "vertical": preload("res://player/sounds/nyah_01.ogg"),
+    "horizontal": preload("res://player/sounds/hwah_01.ogg")
 }
 
 
 var talk_crap = [
-    preload("res://player/yeah.ogg"),
-    preload("res://player/take_that_beer.ogg")
+    preload("res://player/sounds/yeah.ogg"),
+    preload("res://player/sounds/take_that_beer.ogg")
 ]
 
 var found_beer = false
-var found_beer_sound = preload("res://player/fizzy_fizzy_beer.ogg")
+var found_beer_sound = preload("res://player/sounds/fizzy_fizzy_beer.ogg")
 
 var found_liquor = false
-var found_liquor_sound = preload("res://player/lucky_day_liquor.ogg")
+var found_liquor_sound = preload("res://player/sounds/lucky_day_liquor.ogg")
 
-var landing_sound = preload("res://player/moist_impact.ogg")
-var head_impact_sound = preload("res://player/hit_head_deep.ogg")
+var landing_sound = preload("res://player/sounds/moist_impact.ogg")
+var head_impact_sound = preload("res://player/sounds/hit_head_deep.ogg")
 
 var status = {
     "HEALTH": 5
