@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://yhnt0n6iajoq"]
 
-[ext_resource type="Script" path="res://hazards/gas_vent.gd" id="1_pfsa3"]
-[ext_resource type="Texture2D" uid="uid://ct1pwncs1yr" path="res://hazards/gas_vent.png" id="1_yisqf"]
+[ext_resource type="Script" path="res://hazards/enemies/gas_vent/gas_vent.gd" id="1_pfsa3"]
+[ext_resource type="Texture2D" uid="uid://ct1pwncs1yr" path="res://hazards/enemies/gas_vent/assets/gas_vent.png" id="1_yisqf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_henti"]
 radius = 8.0

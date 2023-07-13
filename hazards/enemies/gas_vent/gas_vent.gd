@@ -6,7 +6,7 @@ extends StaticBody2D
 
 @onready var attack_method = get_node("GasJetLong")
 
-var attack_sound = preload("res://hazards/gas_vent.ogg")
+var attack_sound = preload("res://hazards/enemies/gas_vent/assets/gas_vent.ogg")
 
 func _ready():
     remove_child(attack_method)

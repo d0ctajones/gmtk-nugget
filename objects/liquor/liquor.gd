@@ -2,11 +2,11 @@ extends RigidBody2D
 
 @export var kickable:bool = false
 
-@export var horiztonal_fly_time: float = 0.1
+@export var horizontal_fly_time: float = 0.08
 
-var clink_sound = preload("res://objects/clink.ogg")
+var clink_sound = preload("res://objects/liquor/assets/clunk.ogg")
 
-var DEFAULT_GRAVITY_SCALE = 0.8
+var DEFAULT_GRAVITY_SCALE = 0.9
 
 func set_kickable(is_kickable):
     kickable = is_kickable
@@ -21,7 +21,7 @@ func kick(kick_power):
     var timer = Timer.new()
     timer.name = "gravity_timer"
     timer.set_one_shot(true)
-    timer.set_wait_time(horiztonal_fly_time)
+    timer.set_wait_time(horizontal_fly_time)
     timer.connect('timeout', Callable(timer, 'queue_free'))
     timer.connect('timeout', Callable(self, '_respect_gravity'))
 

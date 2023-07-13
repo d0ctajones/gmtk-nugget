@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bwenr6ghuk2ml"]
+[gd_scene load_steps=7 format=3 uid="uid://bwenr6ghuk2ml"]
 
-[ext_resource type="Texture2D" uid="uid://b1tw6n8ok1ahc" path="res://level/laboratory.png" id="1_ccy20"]
-[ext_resource type="PackedScene" uid="uid://p22natcypeo" path="res://objects/beer.tscn" id="2_cg4ek"]
-[ext_resource type="PackedScene" uid="uid://da7ty7u1mgbhr" path="res://objects/liquor.tscn" id="3_lledn"]
+[ext_resource type="Texture2D" uid="uid://blqqk0orhyc18" path="res://levels/01/assets/level.png" id="1_ptrm1"]
+[ext_resource type="PackedScene" uid="uid://da7ty7u1mgbhr" path="res://objects/liquor/liquor.tscn" id="2_grcsu"]
+[ext_resource type="PackedScene" uid="uid://p22natcypeo" path="res://objects/beer/beer.tscn" id="3_5wjcb"]
+[ext_resource type="PackedScene" uid="uid://yhnt0n6iajoq" path="res://hazards/enemies/gas_vent/gas_vent.tscn" id="4_4m7ms"]
+[ext_resource type="PackedScene" path="res://hazards/projectiles/gas_jet_long/gas_jet_long.tscn" id="5_5dh3r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ay7cj"]
 size = Vector2(150, 20)
@@ -10,7 +12,7 @@ size = Vector2(150, 20)
 [node name="Level" type="Node3D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_ccy20")
+texture = ExtResource("1_ptrm1")
 
 [node name="PlayerSpawn" type="Marker2D" parent="."]
 position = Vector2(-122, 196)
@@ -65,10 +67,20 @@ polygon = PackedVector2Array(-198, -300, -198, -284, -201, -279, -198, -271, -19
 [node name="CollisionPolygon2D14" type="CollisionPolygon2D" parent="Terrain"]
 polygon = PackedVector2Array(139, -146, 118, -146, 106, -144, 100, -137, 96, -127, 96, -115, 104, -106, 154, -105, 163, -109, 169, -112, 176, -120, 177, -134, 169, -143, 160, -146)
 
-[node name="Objects" type="Node" parent="."]
+[node name="Objects" type="Node2D" parent="."]
 
-[node name="Beer" parent="Objects" instance=ExtResource("2_cg4ek")]
-position = Vector2(-231, 194)
+[node name="Liquor" parent="Objects" instance=ExtResource("2_grcsu")]
+position = Vector2(-44, 22)
 
-[node name="Liquor" parent="Objects" instance=ExtResource("3_lledn")]
-position = Vector2(148, 212)
+[node name="Beer" parent="Objects" instance=ExtResource("3_5wjcb")]
+position = Vector2(-132, 39)
+
+[node name="Hazards" type="Node2D" parent="."]
+
+[node name="GasVent" parent="Hazards" instance=ExtResource("4_4m7ms")]
+position = Vector2(178, -17)
+rotation = -2.59475
+
+[node name="GasJetLong" parent="Hazards/GasVent" instance=ExtResource("5_5dh3r")]
+position = Vector2(132.179, 19.0454)
+rotation = 1.71596

@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://c207dprvy0doq"]
 
-[ext_resource type="Texture2D" uid="uid://vlgp2i5s33ql" path="res://hazards/gas_jet_long.png" id="1_dhd3p"]
-[ext_resource type="Script" path="res://hazards/gas_jet_long.gd" id="1_oixnl"]
+[ext_resource type="Script" path="res://hazards/projectiles/gas_jet_long/gas_jet_long.gd" id="1_6elp2"]
+[ext_resource type="Texture2D" uid="uid://vlgp2i5s33ql" path="res://hazards/projectiles/gas_jet_long/gas_jet_long.png" id="2_51085"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1rrgc"]
 height = 240.0
@@ -17,10 +17,10 @@ z_index = 1
 z_as_relative = false
 collision_layer = 2
 collision_mask = 0
-script = ExtResource("1_oixnl")
+script = ExtResource("1_6elp2")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_dhd3p")
+texture = ExtResource("2_51085")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_1rrgc")
