@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://bwenr6ghuk2ml"]
+[gd_scene load_steps=9 format=3 uid="uid://bwenr6ghuk2ml"]
 
 [ext_resource type="Texture2D" uid="uid://blqqk0orhyc18" path="res://levels/01/assets/level.png" id="1_ptrm1"]
 [ext_resource type="PackedScene" uid="uid://da7ty7u1mgbhr" path="res://objects/liquor/liquor.tscn" id="2_grcsu"]
 [ext_resource type="PackedScene" uid="uid://p22natcypeo" path="res://objects/beer/beer.tscn" id="3_5wjcb"]
 [ext_resource type="PackedScene" uid="uid://yhnt0n6iajoq" path="res://hazards/enemies/gas_vent/gas_vent.tscn" id="4_4m7ms"]
 [ext_resource type="PackedScene" path="res://hazards/projectiles/gas_jet_long/gas_jet_long.tscn" id="5_5dh3r"]
+[ext_resource type="PackedScene" uid="uid://c6ywhebif4ijh" path="res://npc/french_fry_guy/frech_fry_guy.tscn" id="6_mxkpr"]
+[ext_resource type="PackedScene" uid="uid://cly2rq31hbq1q" path="res://npc/french_fry_guy/other_half.tscn" id="7_6ouc6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ay7cj"]
 size = Vector2(150, 20)
@@ -15,7 +17,7 @@ size = Vector2(150, 20)
 texture = ExtResource("1_ptrm1")
 
 [node name="PlayerSpawn" type="Marker2D" parent="."]
-position = Vector2(-122, 196)
+position = Vector2(-57, 190)
 
 [node name="Terrain" type="StaticBody2D" parent="."]
 collision_mask = 0
@@ -70,10 +72,10 @@ polygon = PackedVector2Array(139, -146, 118, -146, 106, -144, 100, -137, 96, -12
 [node name="Objects" type="Node2D" parent="."]
 
 [node name="Liquor" parent="Objects" instance=ExtResource("2_grcsu")]
-position = Vector2(-44, 22)
+position = Vector2(-76, 24)
 
 [node name="Beer" parent="Objects" instance=ExtResource("3_5wjcb")]
-position = Vector2(-132, 39)
+position = Vector2(-105, 32)
 
 [node name="Hazards" type="Node2D" parent="."]
 
@@ -84,3 +86,12 @@ rotation = -2.59475
 [node name="GasJetLong" parent="Hazards/GasVent" instance=ExtResource("5_5dh3r")]
 position = Vector2(132.179, 19.0454)
 rotation = 1.71596
+
+[node name="NPCs" type="Node3D" parent="."]
+
+[node name="FryGuy" parent="NPCs" instance=ExtResource("6_mxkpr")]
+position = Vector2(-197, 67)
+rotation = -0.275823
+
+[node name="OtherHalf" parent="NPCs" instance=ExtResource("7_6ouc6")]
+position = Vector2(201, -224)

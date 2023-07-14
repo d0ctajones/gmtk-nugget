@@ -270,11 +270,11 @@ func update_kick_list(action, body):
         if not found_beer:
             if body.name.contains("Beer"):
                 found_beer = true
-                play_sound(found_beer_sound, 5.0)
+                play_sound(found_beer_sound)
         if not found_liquor:
             if body.name.contains("Liquor"):
                 found_liquor = true
-                play_sound(found_liquor_sound, 15.0)
+                play_sound(found_liquor_sound)
         kick_list[body.name] = body
     else:
         kick_list.erase(body.name)
@@ -290,7 +290,7 @@ func _on_hurtbox_body_entered(body):
         take_hit(body.deal_damage())
         state_change.emit()
 
-func play_sound(sound, db=1.0):
+func play_sound(sound, db=-25.0):
     var sound_player = AudioStreamPlayer.new()
     sound_player.set_stream(sound)
     sound_player.autoplay = true

@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://c6ywhebif4ijh"]
+
+[ext_resource type="Texture2D" uid="uid://du17ahk8tcsx4" path="res://npc/french_fry_guy/assets/french_fry_guy.png" id="1_u2c03"]
+
+[node name="npc" type="RigidBody2D"]
+collision_layer = 8
+collision_mask = 9
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-7.5, -7)
+scale = Vector2(1.532, 1.5)
+texture = ExtResource("1_u2c03")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, 16, 7, 8, -4, -5, -15, -17, -15, -25, -21, -25, -25, -29, -29, -26, -32, -19, -28, -13, -13, 4)

@@ -1,7 +1,7 @@
 extends StaticBody2D
 
 @export var attack_interval: float = 1.0
-@export var attack_duration: float = 1.0
+@export var attack_duration: float = 0.5
 
 
 @onready var attack_method = get_node("GasJetLong")
@@ -38,10 +38,11 @@ func play_sound(sound):
     var sound_player = AudioStreamPlayer2D.new()
     sound_player.set_stream(sound)
     sound_player.autoplay = true
-    sound_player.max_distance = 500.0
-    sound_player.position = get_parent().position
+    sound_player.max_distance = 300.0
+    sound_player.set_volume_db(-25.0)
+    sound_player.position = position
     sound_player.connect('finished', Callable(sound_player, 'queue_free'))
 
-    add_child(sound_player)
+    get_parent().add_child(sound_player)
 
     return sound_player

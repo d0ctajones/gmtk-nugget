@@ -35,9 +35,9 @@ func play_sound(sound):
     var sound_player = AudioStreamPlayer2D.new()
     sound_player.set_stream(sound)
     sound_player.autoplay = true
-    sound_player.max_distance = 400.0
+    sound_player.max_distance = 200.0
     sound_player.position = position
-    sound_player.set_volume_db(10.0)
+    sound_player.set_volume_db(-25.0)
     sound_player.connect('finished', Callable(sound_player, 'queue_free'))
 
     get_parent().add_child(sound_player)
