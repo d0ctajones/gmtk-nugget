@@ -4,7 +4,13 @@ extends RigidBody2D
 
 @export var horizontal_fly_time: float = 0.1
 
+@onready var animation_player = $AnimationPlayer
+
 # var clink_sound = preload("res://objects/beer/assets/clink.ogg")
+
+var stats = {
+    "name": "OtherHalf",
+}
 
 var DEFAULT_GRAVITY_SCALE = 1.0
 
@@ -41,6 +47,16 @@ func play_sound(sound):
     sound_player.connect('finished', Callable(sound_player, 'queue_free'))
 
     get_parent().add_child(sound_player)
+
+func get_stats():
+    return stats
+
+func set_stats(new_stats):
+    stats = new_stats
+
+func fade_away():
+    animation_player.play("fade_away")
+
 
 # func _on_body_entered(body):
 #     play_sound(clink_sound)
