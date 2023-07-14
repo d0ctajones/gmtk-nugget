@@ -3,9 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://d0g582havn241" path="res://npc/french_fry_guy/assets/other_half.png" id="1_488f0"]
 [ext_resource type="Script" path="res://npc/french_fry_guy/other_half.gd" id="1_cdtbp"]
 
-[sub_resource type="Animation" id="Animation_ot8yf"]
+[sub_resource type="Animation" id="Animation_fb0fu"]
 resource_name = "fade_away"
-length = 1.5
+length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -13,10 +13,10 @@ tracks/0/path = NodePath("Sprite2D:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1, 1.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0.74902), Color(1, 1, 1, 0.5), Color(1, 1, 1, 0.25), Color(1, 1, 1, 0)]
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.75), Color(1, 1, 1, 0.5), Color(1, 1, 1, 0.25), Color(1, 1, 1, 0)]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
@@ -25,7 +25,7 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(1.5),
+"times": PackedFloat32Array(2),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -33,7 +33,7 @@ tracks/1/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_i0i5l"]
+[sub_resource type="Animation" id="Animation_f35ms"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -45,13 +45,13 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 0.74902)]
+"values": [Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_286dn"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ul086"]
 _data = {
-"RESET": SubResource("Animation_i0i5l"),
-"fade_away": SubResource("Animation_ot8yf")
+"RESET": SubResource("Animation_f35ms"),
+"fade_away": SubResource("Animation_fb0fu")
 }
 
 [node name="npc" type="RigidBody2D"]
@@ -60,7 +60,6 @@ collision_mask = 9
 script = ExtResource("1_cdtbp")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-self_modulate = Color(1, 1, 1, 0.74902)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("1_488f0")
 
@@ -69,5 +68,5 @@ polygon = PackedVector2Array(-14, 16, -9, 22, -3, 18, 8, 6, 18, -4, 23, -12, 22,
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_286dn")
+"": SubResource("AnimationLibrary_ul086")
 }

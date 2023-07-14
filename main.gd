@@ -14,7 +14,7 @@ func spawn_player():
     player_node.position = player_spawn
     connect_player_signals(player_node)
 
-    add_child(player_node)
+    add_child.call_deferred(player_node)
 
 func load_level():
     var level = load("res://levels/01/level.tscn")
@@ -40,4 +40,4 @@ func play_music():
     sound_player.set_volume_db(-25.0)
     sound_player.connect('finished', Callable(sound_player, 'start'))
 
-    add_child(sound_player)
+    add_child.call_deferred(sound_player)

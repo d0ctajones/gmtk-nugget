@@ -1,10 +1,98 @@
-[gd_scene load_steps=4 format=3 uid="uid://yhnt0n6iajoq"]
+[gd_scene load_steps=9 format=3 uid="uid://yhnt0n6iajoq"]
 
 [ext_resource type="Script" path="res://hazards/enemies/gas_vent/gas_vent.gd" id="1_pfsa3"]
 [ext_resource type="Texture2D" uid="uid://ct1pwncs1yr" path="res://hazards/enemies/gas_vent/assets/gas_vent.png" id="1_yisqf"]
+[ext_resource type="PackedScene" uid="uid://cwsv4y27o7w28" path="res://hazards/projectiles/gas_jet_long/gas_jet_long.tscn" id="3_3sh2y"]
+[ext_resource type="AudioStream" uid="uid://uip5sjwd7kas" path="res://hazards/enemies/gas_vent/assets/gas_vent.ogg" id="4_2ucwg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_henti"]
 radius = 8.0
+
+[sub_resource type="Animation" id="Animation_kow0e"]
+resource_name = "attack"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AttackMethod:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AttackMethod:collision_layer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 2]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AttackSound:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_3pvij"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AttackMethod:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AttackMethod:collision_layer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AttackSound:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ckubc"]
+_data = {
+"RESET": SubResource("Animation_3pvij"),
+"attack": SubResource("Animation_kow0e")
+}
 
 [node name="GasVent" type="StaticBody2D"]
 collision_layer = 2
@@ -15,6 +103,20 @@ script = ExtResource("1_pfsa3")
 position = Vector2(7, 3)
 texture = ExtResource("1_yisqf")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Hitbox" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 0)
 shape = SubResource("CircleShape2D_henti")
+
+[node name="AttackMethod" parent="." instance=ExtResource("3_3sh2y")]
+position = Vector2(133, 1)
+rotation = 1.5708
+
+[node name="AttackSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_2ucwg")
+volume_db = -25.0
+max_distance = 300.0
+
+[node name="AttackAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ckubc")
+}

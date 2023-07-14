@@ -122,6 +122,8 @@ shape = SubResource("RectangleShape2D_8f64o")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hurtbox"]
 polygon = PackedVector2Array(0, 15, 8, 13, 12, 12, 15, 9, 15, 5, 10, 1, 10, -13, 7, -14, -4, -14, -11, -10, -14, -4, -14, 10, -10, 14)
 
+[node name="DialogPlayer" type="AudioStreamPlayer" parent="."]
+
 [connection signal="body_entered" from="Kicker" to="Kicker" method="_on_body_entered"]
 [connection signal="body_exited" from="Kicker" to="Kicker" method="_on_body_exited"]
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
