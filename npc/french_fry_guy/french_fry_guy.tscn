@@ -159,7 +159,6 @@ libraries = {
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 position = Vector2(-12.4885, -5.66492)
 rotation = -0.711428
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_8axwo")
 
 [node name="PlayerDetector" type="Area2D" parent="."]
