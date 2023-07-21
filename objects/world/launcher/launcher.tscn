@@ -1,0 +1,179 @@
+[gd_scene load_steps=15 format=3 uid="uid://6htgdssdw655"]
+
+[ext_resource type="Script" path="res://objects/world/launcher/launcher.gd" id="1_r1fa6"]
+[ext_resource type="Texture2D" uid="uid://ds2hvrxtye6qs" path="res://objects/world/launcher/launcher_spritesheet.png" id="2_xeukc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2pr4j"]
+atlas = ExtResource("2_xeukc")
+region = Rect2(0, 0, 41, 53)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ry2o2"]
+atlas = ExtResource("2_xeukc")
+region = Rect2(41, 0, 41, 53)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jnmsr"]
+atlas = ExtResource("2_xeukc")
+region = Rect2(82, 0, 41, 53)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x8kw2"]
+atlas = ExtResource("2_xeukc")
+region = Rect2(123, 0, 41, 53)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6femp"]
+atlas = ExtResource("2_xeukc")
+region = Rect2(164, 0, 41, 53)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q1u1e"]
+atlas = ExtResource("2_xeukc")
+region = Rect2(205, 0, 41, 53)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fgkrw"]
+atlas = ExtResource("2_xeukc")
+region = Rect2(246, 0, 41, 53)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0x771"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2pr4j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ry2o2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jnmsr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x8kw2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6femp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q1u1e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fgkrw")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_wgnix"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionPolygon2D:polygon")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [PackedVector2Array(-13, -3, -17, -3, -19, -2, -20, 2, -18, 6, -10, 16, -6, 19, 4, 19, 14, 10, 19, 3, 19, -4, 17, -5, 11, -5, 8, -4, 5, -2, -2, 1, -8, 0, -10, -1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("launch_box/CollisionShape2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1.75, -2.25)]
+}
+
+[sub_resource type="Animation" id="Animation_2slf2"]
+resource_name = "launch"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionPolygon2D:polygon")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [PackedVector2Array(-13, -3, -17, -3, -19, -2, -20, 2, -18, 6, -10, 16, -6, 19, 4, 19, 14, 10, 19, 3, 19, -4, 17, -5, 11, -5, 8, -4, 5, -2, -2, 1, -8, 0, -10, -1), PackedVector2Array(-13, -4, -17, -3, -19, -2, -20, 2, -18, 6, -10, 16, -6, 19, 4, 19, 14, 10, 19, 3, 19, -4, 17, -5, 11, -5, 7, -10, 4, -7, -2, -4, -7, -4, -11, -7), PackedVector2Array(-14, -8, -17, -3, -19, -2, -20, 2, -18, 6, -10, 16, -6, 19, 4, 19, 14, 10, 19, 3, 19, -4, 17, -5, 15, -10, 9, -11, 6, -17, 3, -13, 1, -9, -6, -9, -8, -12, -11, -13), PackedVector2Array(-14, -8, -17, -3, -19, -2, -20, 2, -18, 6, -10, 16, -6, 19, 4, 19, 14, 10, 19, 3, 19, -4, 17, -5, 15, -10, 9, -11, 6, -17, 4, -19, 1, -21, -3, -23, -7, -16, -11, -13), PackedVector2Array(-14, -8, -17, -3, -19, -2, -20, 2, -18, 6, -10, 16, -6, 19, 4, 19, 14, 10, 19, 3, 19, -4, 17, -5, 15, -10, 9, -11, 6, -17, 3, -13, 1, -9, -6, -9, -8, -12, -11, -13), PackedVector2Array(-13, -4, -17, -3, -19, -2, -20, 2, -18, 6, -10, 16, -6, 19, 4, 19, 14, 10, 19, 3, 19, -4, 17, -5, 11, -5, 7, -10, 4, -7, -2, -4, -7, -4, -11, -7), PackedVector2Array(-13, -3, -17, -3, -19, -2, -20, 2, -18, 6, -10, 16, -6, 19, 4, 19, 14, 10, 19, 3, 19, -4, 17, -5, 11, -5, 8, -4, 5, -2, -2, 1, -8, 0, -10, -1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("launch_box/CollisionShape2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-1.75, -2.25), Vector2(-2, -11.625), Vector2(-2, -16.625), Vector2(-2, -23.625), Vector2(-2, -16.625), Vector2(-2, -11.625), Vector2(-1.75, -2.25)]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_on_launch"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ky5p0"]
+_data = {
+"RESET": SubResource("Animation_wgnix"),
+"launch": SubResource("Animation_2slf2")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vmnnt"]
+size = Vector2(42, 41.75)
+
+[node name="launcher" type="StaticBody2D"]
+collision_mask = 0
+script = ExtResource("1_r1fa6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_0x771")
+metadata/_edit_lock_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ky5p0")
+}
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-13, -3, -17, -3, -19, -2, -20, 2, -18, 6, -10, 16, -6, 19, 4, 19, 14, 10, 19, 3, 19, -4, 17, -5, 11, -5, 8, -4, 5, -2, -2, 1, -8, 0, -10, -1)
+metadata/_edit_lock_ = true
+
+[node name="launch_box" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 12
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="launch_box"]
+position = Vector2(-1.75, -2.25)
+shape = SubResource("RectangleShape2D_vmnnt")
+
+[node name="AttackTimer" type="Timer" parent="."]
+one_shot = true

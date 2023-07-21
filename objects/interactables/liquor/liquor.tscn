@@ -13,8 +13,8 @@ z_as_relative = false
 collision_layer = 8
 collision_mask = 9
 gravity_scale = 0.9
-continuous_cd = 1
-max_contacts_reported = 2
+continuous_cd = 2
+max_contacts_reported = 3
 contact_monitor = true
 script = ExtResource("1_adpsm")
 

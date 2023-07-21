@@ -79,9 +79,9 @@ func _ready():
 
 func _physics_process(delta):
     if Input.is_action_just_pressed("kick_vertical") :
-        kick("vertical")
+        _kick("vertical")
     elif Input.is_action_just_pressed("kick_horizontal"):
-        kick("horizontal")
+        _kick("horizontal")
 
     if Input.is_action_just_pressed("dash"):
         if not has_node("dash_cooldown_timer"):
@@ -253,7 +253,7 @@ func move(delta):
     move_and_slide()
 
 
-func kick(kick_type):
+func _kick(kick_type):
     # Kick in the direction of movement. If not moving, kick in the direction the player is facing.
     # Don't kick if the kick cooldown timer is active.
     if not has_node("kick_cooldown_timer"):

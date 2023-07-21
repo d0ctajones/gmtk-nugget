@@ -7,9 +7,7 @@ extends "res://objects/interactables/kickable.gd"
 
 class_name Liquor
 
-@onready var clunk_sound = preload("res://objects/interactables/liquor/assets/clunk.ogg")
-
 func _init():
-    impact_sound = clunk_sound
+    impact_sound = preload("res://objects/interactables/liquor/assets/clunk.ogg")
     ignore_gravity_frames_max = 2
     default_gravity_scale = 1.0

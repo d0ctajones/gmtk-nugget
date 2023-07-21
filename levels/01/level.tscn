@@ -1,14 +1,23 @@
-[gd_scene load_steps=8 format=3 uid="uid://bwenr6ghuk2ml"]
+[gd_scene load_steps=13 format=3 uid="uid://bwenr6ghuk2ml"]
 
 [ext_resource type="Texture2D" uid="uid://blqqk0orhyc18" path="res://levels/01/assets/level.png" id="1_ptrm1"]
-[ext_resource type="PackedScene" uid="uid://da7ty7u1mgbhr" path="res://objects/liquor/liquor.tscn" id="2_grcsu"]
-[ext_resource type="PackedScene" uid="uid://p22natcypeo" path="res://objects/beer/beer.tscn" id="3_5wjcb"]
+[ext_resource type="PackedScene" uid="uid://da7ty7u1mgbhr" path="res://objects/interactables/liquor/liquor.tscn" id="2_grcsu"]
+[ext_resource type="PackedScene" uid="uid://bkycjmhkilew3" path="res://levels/01/level_components/static_platform_001.tscn" id="2_mbv4r"]
+[ext_resource type="PackedScene" uid="uid://p22natcypeo" path="res://objects/interactables/beer/beer.tscn" id="3_5wjcb"]
 [ext_resource type="PackedScene" uid="uid://yhnt0n6iajoq" path="res://hazards/enemies/gas_vent/gas_vent.tscn" id="4_4m7ms"]
 [ext_resource type="PackedScene" uid="uid://c6ywhebif4ijh" path="res://npc/french_fry_guy/french_fry_guy.tscn" id="6_mxkpr"]
 [ext_resource type="PackedScene" uid="uid://cly2rq31hbq1q" path="res://npc/french_fry_guy/other_half.tscn" id="7_6ouc6"]
+[ext_resource type="PackedScene" uid="uid://6htgdssdw655" path="res://objects/world/launcher/launcher.tscn" id="7_gw2ck"]
+[ext_resource type="PackedScene" uid="uid://vfrphrqp3r41" path="res://levels/01/level_components/static_platform_002.tscn" id="9_7boqt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ay7cj"]
-size = Vector2(150, 20)
+size = Vector2(599, 21)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pworu"]
+size = Vector2(22.5, 479)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1fgtx"]
+size = Vector2(13.5, 464)
 
 [node name="Level" type="Node3D"]
 
@@ -16,76 +25,62 @@ size = Vector2(150, 20)
 texture = ExtResource("1_ptrm1")
 
 [node name="PlayerSpawn" type="Marker2D" parent="."]
-position = Vector2(-57, 190)
+position = Vector2(142, 256)
 
 [node name="Terrain" type="StaticBody2D" parent="."]
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain"]
-position = Vector2(-99, 238)
+position = Vector2(1.5, 299.5)
 shape = SubResource("RectangleShape2D_ay7cj")
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Terrain"]
-polygon = PackedVector2Array(-31, 228, -24, 228, 159, 228, 213, 224, 234, 217, 252, 205, 266, 185, 273, 166, 273, 144, 279, 105, 275, 66, 299, 65, 300, 139, 262, 250, 121, 246, -32, 250)
-
-[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Terrain"]
-polygon = PackedVector2Array(-124, -52, -141, -52, -149, -62, -159, -71, -166, -74, -176, -74, -181, -72, -193, -60, -195, -52, -199, -46, -212, -39, -225, -29, -235, -19, -245, -8, -245, 3, -245, 12, -237, 21, -229, 23, -225, 1, -210, -19, -186, -30, -155, -34, -119, -33, -102, -34, -91, -37, -66, -58, -42, -77, -33, -87, -25, -91, -15, -100, -15, -116, -24, -123, -55, -123, -66, -120, -78, -112, -86, -99, -93, -71, -100, -63, -111, -56)
-
-[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="Terrain"]
-polygon = PackedVector2Array(-300, -110, -256, -110, -250, -107, -242, -98, -242, -83, -246, -80, -258, -76, -271, -71, -278, -62, -288, -38, -293, -12, -293, -1, -300, 0, -300, -14)
-
-[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="Terrain"]
-polygon = PackedVector2Array(-89, 40, -114, 40, -123, 43, -134, 51, -138, 59, -138, 63, -135, 69, -125, 78, -116, 81, -91, 83, -63, 83, -44, 76, -37, 65, -38, 55, -49, 47, -59, 42, -68, 40)
-
-[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="Terrain"]
-polygon = PackedVector2Array(53, 98, 37, 102, 30, 102, 19, 106, 15, 109, 14, 117, 17, 125, 30, 133, 73, 137, 94, 139, 118, 135, 138, 131, 146, 129, 153, 121, 153, 109, 146, 103, 128, 100, 111, 98, 93, 98)
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Terrain"]
-polygon = PackedVector2Array(-174, 228, -205, 228, -212, 226, -221, 223, -235, 219, -244, 208, -254, 183, -254, 156, -255, 152, -258, 149, -260, 146, -264, 146, -273, 152, -287, 152, -293, 149, -293, 109, -300, 109, -300, 210, -300, 245, -175, 246)
-
-[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="Terrain"]
-polygon = PackedVector2Array(-293, 109, -293, 48, -293, 0, -300, 0, -300, 108)
-
-[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Terrain"]
-polygon = PackedVector2Array(26, 1, 23, -6, 23, -17, 26, -21, 31, -26, 34, -28, 49, -28, 56, -25, 61, -17, 61, -3, 60, 1, 53, 7, 33, 7)
-
-[node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="Terrain"]
-polygon = PackedVector2Array(180, -25, 175, -23, 170, -17, 169, 2, 176, 10, 193, 14, 275, 14, 276, 65, 299, 65, 298, 13, 298, -32, 299, -106, 257, -107, 249, -104, 240, -97, 239, -81, 242, -74, 252, -67, 269, -66, 268, -44, 266, -38, 249, -28, 217, -26)
-
-[node name="CollisionPolygon2D10" type="CollisionPolygon2D" parent="Terrain"]
-position = Vector2(2, -1)
-polygon = PackedVector2Array(276, -108, 275, -133, 277, -150, 274, -161, 277, -175, 298, -174, 297, -108)
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Terrain"]
+position = Vector2(-306, 53.5)
+shape = SubResource("RectangleShape2D_pworu")
 
 [node name="CollisionPolygon2D11" type="CollisionPolygon2D" parent="Terrain"]
-polygon = PackedVector2Array(280, -176, 280, -192, 275, -209, 268, -220, 265, -245, 239, -268, 188, -273, 131, -272, 107, -266, 107, -298, 295, -297, 299, -175)
+polygon = PackedVector2Array(293, -175, 291, -199, 285, -233, 272, -248, 256, -251, 239, -268, 188, -273, 131, -272, 107, -266, 107, -298, 295, -297, 305, -175)
 
 [node name="CollisionPolygon2D12" type="CollisionPolygon2D" parent="Terrain"]
 polygon = PackedVector2Array(107, -266, 58, -266, 33, -271, -3, -269, -38, -258, -56, -254, -73, -245, -84, -234, -98, -234, -105, -239, -110, -245, -109, -260, -114, -267, -117, -278, -116, -300, 106, -299)
 
 [node name="CollisionPolygon2D13" type="CollisionPolygon2D" parent="Terrain"]
-polygon = PackedVector2Array(-198, -300, -198, -284, -201, -279, -198, -271, -194, -265, -192, -250, -191, -239, -198, -233, -218, -230, -228, -235, -253, -235, -263, -233, -269, -207, -280, -184, -280, -111, -300, -111, -300, -246, -300, -300)
+polygon = PackedVector2Array(-198, -300, -198, -284, -201, -279, -198, -271, -194, -265, -192, -250, -191, -239, -198, -233, -218, -230, -228, -235, -253, -235, -265, -234, -281, -221, -286, -180, -300, -246, -300, -300)
 
-[node name="CollisionPolygon2D14" type="CollisionPolygon2D" parent="Terrain"]
-polygon = PackedVector2Array(139, -146, 118, -146, 106, -144, 100, -137, 96, -127, 96, -115, 104, -106, 154, -105, 163, -109, 169, -112, 176, -120, 177, -134, 169, -143, 160, -146)
+[node name="StaticPlatform001" parent="Terrain" instance=ExtResource("2_mbv4r")]
+position = Vector2(35, 203)
+
+[node name="static_platform_002" parent="Terrain" instance=ExtResource("9_7boqt")]
+position = Vector2(-259, 250)
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Terrain"]
+position = Vector2(298.75, 57)
+shape = SubResource("RectangleShape2D_1fgtx")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Terrain"]
+polygon = PackedVector2Array(151, 289, 157, 287, 234, 287, 239, 285, 251, 282, 257, 280, 270, 274, 278, 268, 285, 260, 290, 250, 291, 241, 300, 241, 300, 288)
 
 [node name="Objects" type="Node2D" parent="."]
 
 [node name="Liquor" parent="Objects" instance=ExtResource("2_grcsu")]
-position = Vector2(-101, 23)
+position = Vector2(-211, 107)
 
 [node name="Beer" parent="Objects" instance=ExtResource("3_5wjcb")]
 position = Vector2(90, 90)
 
+[node name="launcher" parent="Objects" instance=ExtResource("7_gw2ck")]
+position = Vector2(-276, 215)
+
 [node name="Hazards" type="Node2D" parent="."]
 
 [node name="GasVent" parent="Hazards" instance=ExtResource("4_4m7ms")]
-position = Vector2(178, -17)
+position = Vector2(9, 185)
 rotation = -2.4689
 
 [node name="NPCs" type="Node3D" parent="."]
 
 [node name="FrenchFryGuy" parent="NPCs" instance=ExtResource("6_mxkpr")]
-position = Vector2(-200, 164)
+position = Vector2(-89, 193)
 
 [node name="OtherHalf" parent="NPCs" instance=ExtResource("7_6ouc6")]
 position = Vector2(182, 73)

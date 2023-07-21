@@ -1,59 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://c6ywhebif4ijh"]
+[gd_scene load_steps=8 format=3 uid="uid://c6ywhebif4ijh"]
 
 [ext_resource type="Script" path="res://npc/french_fry_guy/french_fry_guy.gd" id="1_m325l"]
 [ext_resource type="Texture2D" uid="uid://du17ahk8tcsx4" path="res://npc/french_fry_guy/assets/french_fry_guy.png" id="1_u2c03"]
 [ext_resource type="AudioStream" uid="uid://csdbi8j0m335f" path="res://npc/french_fry_guy/sounds/yayyy.ogg" id="3_ilw1c"]
-
-[sub_resource type="Animation" id="Animation_i0i5l"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("DialogPlayer:stream")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("3_ilw1c")]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("DialogPlayer:playing")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("DialogPlayer:volume_db")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
 
 [sub_resource type="Animation" id="Animation_ot8yf"]
 resource_name = "fade_away"
@@ -123,7 +72,6 @@ tracks/4/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_286dn"]
 _data = {
-"RESET": SubResource("Animation_i0i5l"),
 "fade_away": SubResource("Animation_ot8yf")
 }
 
@@ -170,7 +118,6 @@ position = Vector2(-12, -5)
 shape = SubResource("CircleShape2D_awq7i")
 
 [node name="DialogPlayer" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("3_ilw1c")
 max_distance = 500.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
