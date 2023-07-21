@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://da7ty7u1mgbhr"]
 
-[ext_resource type="Script" path="res://objects/liquor/liquor.gd" id="1_adpsm"]
-[ext_resource type="Texture2D" uid="uid://db14h278lkn12" path="res://objects/liquor/assets/liquor.png" id="2_sajhf"]
+[ext_resource type="Script" path="res://objects/interactables/liquor/liquor.gd" id="1_adpsm"]
+[ext_resource type="Texture2D" uid="uid://db14h278lkn12" path="res://objects/interactables/liquor/assets/liquor.png" id="2_sajhf"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oy1e1"]
 radius = 4.5

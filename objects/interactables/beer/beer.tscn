@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://p22natcypeo"]
 
-[ext_resource type="Script" path="res://objects/beer/beer.gd" id="1_en3dy"]
-[ext_resource type="Texture2D" uid="uid://s0ffbdjgo1tq" path="res://objects/beer/assets/beer.png" id="2_4kya6"]
+[ext_resource type="Script" path="res://objects/interactables/beer/beer.gd" id="1_en3dy"]
+[ext_resource type="Texture2D" uid="uid://s0ffbdjgo1tq" path="res://objects/interactables/beer/assets/beer.png" id="2_4kya6"]
 
 [sub_resource type="CircleShape2D" id="1"]
 radius = 8.0
